@@ -1,12 +1,33 @@
 import queues
-from azure.storage import QueueMessage
+import account
+from azure.storage import QueueMessage, QueueEnumResults
+
+account_name = account.test_name
+account_key = account.test_key
 
 initial_length = 34
+initial_queue_count = 1
 
-q = queues.Queue("test")
+test_queue_name = "test"
 
-def test_type():
+q = queues.Queue(test_queue_name, account_name, account_key)
+
+def test_queue_object_creation():
     assert isinstance(q, queues.Queue)
+
+def test_get_queues():
+   queues = q.get_queues()
+   assert isinstance(queues, QueueEnumResults)
+
+def test_get_queue_names():
+    names = q.get_queue_names()[0]
+    assert names == test_queue_name
+
+def test_queue_count():
+    assert initial_queue_count == q.queue_count()
+
+def test_queue_exists():
+    assert q.queue_exists(test_queue_name)
 
 def test_initial_queue_length():
     assert q.length() == initial_length
