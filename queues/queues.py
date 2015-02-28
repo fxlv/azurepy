@@ -37,7 +37,10 @@ class Queue:
         return False
 
     def create_queue(self, name):
-        self.queue_service.create_queue(name)
+        return self.queue_service.create_queue(name)
+
+    def delete_queue(self, name):
+        return self.queue_service.delete_queue(name)
 
     def put(self, msg):
         return self.queue_service.put_message(self.name, msg)
