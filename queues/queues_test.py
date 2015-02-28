@@ -12,7 +12,7 @@ test_queue_name = "test"
 
 q = queues.Queue(test_queue_name, account_name, account_key)
 
-def test_queue_object_creation():
+def test_init():
     assert isinstance(q, queues.Queue)
 
 def test_get_queues():
@@ -29,19 +29,37 @@ def test_queue_count():
 def test_queue_exists():
     assert q.queue_exists(test_queue_name)
 
-def test_initial_queue_length():
-    assert q.length() == initial_length
+def test_create_queue():
+    pass
 
-def test_add():
+def test_delete_queue():
+    pass
+
+def test_put():
     q.put("test")
     assert q.length() == initial_length + 1
+
+def test_length():
+    assert q.length() == initial_length
+
+def test_get_messages():
+    pass
+
+def test_get_all_messages():
+    pass
 
 def test_get_message():
     message = q.get_message()
     assert isinstance(message, QueueMessage)
 
-def test_delete():
+def test_delete_message():
     message = q.get_message()
     assert q.length() == initial_length + 1
     q.delete_message(message)
     assert q.length() == initial_length
+
+def test_peek_message():
+    pass
+
+def test_peek_all_messages():
+    pass
