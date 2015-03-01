@@ -13,6 +13,15 @@ class Queue:
             account_key = account.key
         self.queue_service = QueueService(
             account_name, account_key)
+        if not self.queue_exists():
+            self.create_queue()
+
+    def create_queue(self):
+        return self.queue_service.create_queue(self.name)
+
+    def delete_queue(self):
+        "Delete itself"
+        return self.queue_service.delete_queue(self.name)
 
     def get_queues(self):
         "Return a list of queues"
@@ -26,21 +35,18 @@ class Queue:
             queue_names_list.append(queue.name)
         return queue_names_list
 
+
     def queue_count(self):
         "Return number of queues in this account"
         return len(self.get_queues())
 
-    def queue_exists(self, name):
+    def queue_exists(self):
         "Return True if the specified queue name exists"
-        if name in self.get_queue_names():
+        if self.name in self.get_queue_names():
             return True
         return False
 
-    def create_queue(self, name):
-        return self.queue_service.create_queue(name)
 
-    def delete_queue(self, name):
-        return self.queue_service.delete_queue(name)
 
     def put(self, msg):
         return self.queue_service.put_message(self.name, msg)
