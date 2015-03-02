@@ -2,13 +2,9 @@ import random
 import time
 import sys
 from azurepy import queues
-import test_account
 from azure.storage import QueueMessage, QueueEnumResults, QueueMessagesList
 
 sys.path.append("../")
-
-account_name = test_account.test_name
-account_key = test_account.test_key
 
 initial_length = 0
 initial_queue_count = 1
@@ -16,7 +12,7 @@ initial_queue_count = 1
 random_number = random.randint(0,100)
 test_queue_name = "test{0}".format(random_number)
 
-q = queues.Queue(test_queue_name, account_name, account_key)
+q = queues.Queue(test_queue_name)
 
 def test_init():
     assert isinstance(q, queues.Queue)
