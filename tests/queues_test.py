@@ -1,16 +1,16 @@
 import random
 import time
 import sys
+sys.path.append("../")
 from azurepy import queues
 from azure.storage import QueueMessage, QueueEnumResults, QueueMessagesList
 
-sys.path.append("../")
 
 initial_length = 0
 initial_queue_count = 1
 
 random_number = random.randint(0,100)
-test_queue_name = "test{0}".format(random_number)
+test_queue_name = "test-{0}".format(random_number)
 
 q = queues.Queue(test_queue_name)
 
