@@ -1,5 +1,6 @@
+import os
+import sys
 from azure.storage import QueueService
-import account
 
 
 class Queue:
@@ -9,12 +10,25 @@ class Queue:
         # use default keys from account module
         # but also allow to override that if needed
         if not account_name and not account_key:
-            account_name = account.name
-            account_key = account.key
+            if os.path.exists("account.py"):
+                import account
+                account_name = account.name
+                account_key = account.key
+            else:
+                self.help_account()
         self.queue_service = QueueService(
             account_name, account_key)
         if not self.queue_exists():
             self.create_queue()
+
+    def help_account(self):
+        print
+        print "You have not specified the 'account_name'"
+        print "and the 'account_key' that should be used"
+        print
+        print "Please read the docs on how to do that."
+        print
+        sys.exit(1)
 
     def create_queue(self):
         return self.queue_service.create_queue(self.name)
@@ -24,7 +38,7 @@ class Queue:
         if self.name in self.get_queue_names():
             return True
         return False
-    
+
     def delete_queue(self):
         "Delete itself"
         return self.queue_service.delete_queue(self.name)
@@ -44,7 +58,7 @@ class Queue:
     def queue_count(self):
         "Return number of queues in this account"
         return len(self.get_queues())
-    
+
     def length(self):
         queue_metadata = self.queue_service.get_queue_metadata(self.name)
         queue_length = queue_metadata['x-ms-approximate-messages-count']
