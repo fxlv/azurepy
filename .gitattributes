@@ -1,2 +1,3 @@
 account.py filter=git-crypt diff=git-crypt
+test_account.py filter=git-crypt diff=git-crypt
 
