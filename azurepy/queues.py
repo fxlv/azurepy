@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 from azure.storage import QueueService
 
 
@@ -7,6 +8,12 @@ class Queue:
 
     def __init__(self, name, account_name=None, account_key=None):
         self.name = name
+        if not re.match("^[a-zA-Z0-9-]+$", self.name):
+            print
+            print "Invalid queue name"
+            print "Queue names can only contain letters, numbers and hyphens."
+            print
+            sys.exit(1)
         # use default keys from account module
         # but also allow to override that if needed
         if not account_name and not account_key:
