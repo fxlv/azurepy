@@ -28,6 +28,12 @@ class Queue:
         if not self.queue_exists():
             self.create_queue()
 
+    def __repr__(self):
+        return "Queue: {0}".self.name
+
+    def __str__(self):
+        return self.name
+
     def help_account(self):
         print
         print "You have not specified the 'account_name'"
@@ -71,8 +77,12 @@ class Queue:
         queue_length = queue_metadata['x-ms-approximate-messages-count']
         return int(queue_length)
 
-    def put(self, msg):
-        return self.queue_service.put_message(self.name, msg)
+    def put(self, msg, ttl=None):
+        """
+        msg - message text
+        ttl - time to live in seconds. default is 7 days.
+        """
+        return self.queue_service.put_message(self.name, msg, messagettl=ttl)
 
     def get_messages(self, number_of_messages=1, timeout=30):
         messages = self.queue_service.get_messages(
