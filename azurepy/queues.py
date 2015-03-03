@@ -105,6 +105,9 @@ class Queue:
             message.message_id,
             message.pop_receipt)
 
+    def clear(self):
+        return self.queue_service.clear_messages()
+
     def peek_messages(self, number_of_messages=1):
         return self.queue_service.peek_messages(
             self.name, numofmessages=number_of_messages)
