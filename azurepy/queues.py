@@ -97,7 +97,15 @@ class Queue:
             timeout=timeout)
 
     def get_message(self, timeout=30):
-        return self.get_messages(timeout=timeout)[0]
+        try:
+            msg = self.get_messages(timeout=timeout)
+            if len(msg) >0:
+                msg = msg[0]
+            else:
+                msg = None
+        except Exception:
+            msg = None
+        return msg
 
     def delete_message(self, message):
         return self.queue_service.delete_message(
@@ -113,7 +121,13 @@ class Queue:
             self.name, numofmessages=number_of_messages)
 
     def peek_message(self):
-        return self.peek_messages()[0]
+        try:
+            msg = self.peek_messages()
+            return msg[0]
+        except IndexError:
+            print self.peek_messages()
+            return None
+
 
     def peek_all_messages(self):
         return self.peek_messages(number_of_messages=self.length())
