@@ -1,6 +1,5 @@
 from subprocess import Popen, PIPE
 import json
-import os
 import sys
 
 
@@ -37,7 +36,7 @@ class AzureVM():
             print "DATA: {}".format(stdout)
             return False
 
-    def delete_vm(vm_name, resource_group_name):
+    def delete_vm(self, vm_name, resource_group_name):
         self.run_command("azure vm delete -n {} -g {}".format(
             vm_name, resource_group_name))
 
