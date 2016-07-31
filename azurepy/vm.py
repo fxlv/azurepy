@@ -39,6 +39,10 @@ class AzureVM():
     def delete_vm(self, vm_name, resource_group_name):
         self.run_command("azure vm delete -n {} -g {}".format(
             vm_name, resource_group_name))
+         
+    delete_group(self, resource_group_name):
+        self.run_command("azure group delete --json {}".format(
+            resource_group_name))
 
     def check_subscription(self):
         """Return True if the provided subscription_id is valid."""
