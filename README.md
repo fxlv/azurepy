@@ -1,5 +1,8 @@
 # azurepy
 
+[![Build Status](https://travis-ci.org/fxlv/azurepy.svg?branch=master)](https://travis-ci.org/fxlv/azurepy)
+
+
 Currently, a place for me to play with Azure features.
 
 It is sort of a wrapper around python Azure module
