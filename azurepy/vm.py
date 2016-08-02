@@ -39,8 +39,8 @@ class AzureVM():
     def delete_vm(self, vm_name, resource_group_name):
         self.run_command("azure vm delete -n {} -g {}".format(
             vm_name, resource_group_name))
-         
-    delete_group(self, resource_group_name):
+
+    def delete_group(self, resource_group_name):
         self.run_command("azure group delete --json {}".format(
             resource_group_name))
 
@@ -95,7 +95,7 @@ class AzureVM():
         if not self.resource_group_exists():
             self.create_group(resource_group_name, resource_group_location)
         # create the VM itself
-        self.run_command(
-            "azure group deployment create --json -n {} -g {} -f {} -e {}".format(
-                deployment_name, resource_group_name, template_file_path,
-                parameters_file_path))
+        cmd = "azure group deployment create --json -n {} -g {} -f {} -e {}"
+        self.run_command(cmd.format(
+            deployment_name, resource_group_name, template_file_path,
+            parameters_file_path))
