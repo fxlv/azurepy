@@ -14,7 +14,7 @@ python setup.py install
 ## Components
 **queues.py** - wrapper around Azure queues
 
-**vm.py** - wrapper aroung 'azure vm' and 'azure group'
+**vm.py** - wrapper aroung `azure vm` and `azure group`
 
 ## Passing Azure account credentials to use Queues
 In order to use any of the modules you have to either pass along variables 'account_name' and 'account_key'
