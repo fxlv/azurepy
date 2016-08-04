@@ -4,8 +4,8 @@
 
 
 Currently, a place for me to play with Azure features.
-
-It is sort of a wrapper around python Azure module
+Main idea is to make things simpler, deployments faster and remove the need to write boilerplate code.
+Perhaps better idea would be to use Terraform, but this allows me to do something nice :) 
 
 ## Installing
 ```
