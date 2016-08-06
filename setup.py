@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='azurepy',
-      version='0.0.3',
+      version='0.0.4',
       description='Wrapper around Azure python module and CLI tools',
       url='http://github.com/fxlv/azurepy',
       author='Kaspars Mickevics',
