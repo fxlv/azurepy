@@ -1,6 +1,7 @@
 from subprocess import Popen, PIPE
 import json
 import sys
+import random
 
 
 class AzureVM():
@@ -17,6 +18,15 @@ class AzureVM():
     def set_subscription(self):
         self.run_command("azure account set --json {}".format(
             self.subscription_id))
+
+    def read_parameters(self, parameters_file_path):
+        with open(parameters_file_path) as parameters_file:
+            parameters = json.load(parameters_file)
+            return parameters
+
+    def write_parameters(sela, parameters, parameters_file_path):
+        with open(parameters_file_path, "wb") as parameters_file:
+            json.dump(parameters, parameters_file, indent=4)
 
     def run_command(self, command):
         print "DEBUG: running command: {}".format(command)
@@ -94,6 +104,15 @@ class AzureVM():
         # first check if requested resource group exists
         if not self.resource_group_exists():
             self.create_group(resource_group_name, resource_group_location)
+        # update parameters if needed
+        parameters = self.read_parameters(parameters_file_path)
+        parameters['parameters']['storageAccounts_vm1'] = {}
+        parameters['parameters']['storageAccounts_vm2'] = {}
+        parameters['parameters']['virtualMachines_vm_adminPassword'] = {}
+        parameters['parameters']['storageAccounts_vm1']['value'] = "storageacctname{}".format(random.randint(1,10000))
+        parameters['parameters']['storageAccounts_vm2']['value'] = "storageaccname{}".format(random.randint(1,10000))
+        parameters['parameters']['virtualMachines_vm_adminPassword']['value'] = "superSecr!et{}".format(random.randint(1,10000))
+        self.write_parameters(parameters, parameters_file_path)
         # create the VM itself
         cmd = "azure group deployment create --json -n {} -g {} -f {} -e {}"
         self.run_command(cmd.format(
