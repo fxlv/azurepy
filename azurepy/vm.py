@@ -109,12 +109,14 @@ class AzureVM():
         parameters['parameters']['storageAccounts_vm1'] = {}
         parameters['parameters']['storageAccounts_vm2'] = {}
         parameters['parameters']['virtualMachines_vm_adminPassword'] = {}
-        parameters['parameters']['storageAccounts_vm1']['value'] = "storageacctname{}".format(random.randint(1,10000))
-        parameters['parameters']['storageAccounts_vm2']['value'] = "storageaccname{}".format(random.randint(1,10000))
-        parameters['parameters']['virtualMachines_vm_adminPassword']['value'] = "superSecr!et{}".format(random.randint(1,10000))
+        parameters['parameters']['storageAccounts_vm1'][
+            'value'] = "storageacctname{}".format(random.randint(1, 10000))
+        parameters['parameters']['storageAccounts_vm2'][
+            'value'] = "storageaccname{}".format(random.randint(1, 10000))
+        parameters['parameters']['virtualMachines_vm_adminPassword'][
+            'value'] = "superSecr!et{}".format(random.randint(1, 10000))
         self.write_parameters(parameters, parameters_file_path)
         # create the VM itself
         cmd = "azure group deployment create --json -n {} -g {} -f {} -e {}"
-        self.run_command(cmd.format(
-            deployment_name, resource_group_name, template_file_path,
-            parameters_file_path))
+        self.run_command(cmd.format(deployment_name, resource_group_name,
+                                    template_file_path, parameters_file_path))
