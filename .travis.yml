@@ -6,7 +6,7 @@ os:
 before_script:
   - echo "deb http://archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe" | sudo tee /etc/apt/sources.list
   - sudo apt-get update
-  - sudo pip install flake8
+  - sudo pip install flake8 azure
 
 script:
   - "cd tests; py.test -v"
