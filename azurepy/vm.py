@@ -96,15 +96,8 @@ class AzureVM():
         self.run_command("azure group create --json -n {} -l {}".format(
             resource_group_name, resource_group_location))
 
-    def create_vm(self, deployment_name, resource_group_name,
-                  resource_group_location, template_file_path,
-                  parameters_file_path):
-        self.resource_group_name = resource_group_name
-        self.resource_group_location = resource_group_location
-        # first check if requested resource group exists
-        if not self.resource_group_exists():
-            self.create_group(resource_group_name, resource_group_location)
-        # update parameters if needed
+    def gen_parameters(self, parameters_file_path):
+        """Generate the 'parameters.json' file"""
         parameters = self.read_parameters(parameters_file_path)
         parameters['parameters']['storageAccounts_vm1'] = {}
         parameters['parameters']['storageAccounts_vm2'] = {}
@@ -116,6 +109,16 @@ class AzureVM():
         parameters['parameters']['virtualMachines_vm_adminPassword'][
             'value'] = "superSecr!et{}".format(random.randint(1, 10000))
         self.write_parameters(parameters, parameters_file_path)
+
+    def create_vm(self, deployment_name, resource_group_name,
+                  resource_group_location, template_file_path,
+                  parameters_file_path):
+        self.resource_group_name = resource_group_name
+        self.resource_group_location = resource_group_location
+        # first check if requested resource group exists
+        if not self.resource_group_exists():
+            self.create_group(resource_group_name, resource_group_location)
+        self.gen_parameters(parameters_file_path)
         # create the VM itself
         cmd = "azure group deployment create --json -n {} -g {} -f {} -e {}"
         self.run_command(cmd.format(deployment_name, resource_group_name,
