@@ -9,4 +9,5 @@ before_script:
   - sudo pip install flake8
 
 script:
- - flake8 azurepy/*.py
+  - "cd tests; py.test -v"
+  - flake8 azurepy/*.py
