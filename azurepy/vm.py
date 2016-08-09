@@ -6,6 +6,7 @@ import random
 
 class AzureVM():
     def __init__(self, subscription_id):
+        self.name = "AzureVM"
         self.subscription_id = subscription_id
         if not self.check_subscription():
             print "Invalid subscription provided"
@@ -14,6 +15,9 @@ class AzureVM():
                 print name, sub_id
             sys.exit(1)
         self.set_subscription()
+
+    def __repr__(self):
+        return self.name
 
     def set_subscription(self):
         self.run_command("azure account set --json {}".format(
