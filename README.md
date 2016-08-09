@@ -39,3 +39,15 @@ q = queues.Queue("example-queue", account_name, account_key)
 q.put("Wow, it really is that simple")
 ```
 See [examples](https://github.com/fxlv/azurepy/tree/master/examples) directory for more examples.
+
+## Testing
+
+### Run tests
+```
+./tests/test.sh
+```
+
+### Coverage
+```
+./tests/coverage.sh
+```
