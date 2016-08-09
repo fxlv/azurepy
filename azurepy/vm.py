@@ -76,7 +76,7 @@ class AzureVM():
         return self.run_command("azure account list --json")
 
     def list(self):
-        print self.run_command("azure vm list --json")
+        return self.run_command("azure vm list --json")
 
     def get_groups(self):
         groups = {}
