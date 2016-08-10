@@ -76,7 +76,7 @@ def test_delete_message():
     time.sleep(1)
     length_before = q.length()
     message = q.get_message(timeout=10)
-    assert q.delete_message(message) == None
+    assert q.delete_message(message) is None
     assert q.length() == length_before - 1
 
 
