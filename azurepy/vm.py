@@ -75,6 +75,20 @@ class AzureVM():
     def get_accounts(self):
         return self.run_command("azure account list --json")
 
+    def stop_vm(self):
+        self.run_command("azure vm stop --json {}".format(self.vm['name']))
+
+    def start_vm(self):
+        self.run_command("azure vm start --json {}".format(self.vm['name']))
+
+    def set_vm(self, vm_name):
+        vm_list = self.list()
+        for vm in vm_list:
+            if vm['name'] == vm_name:
+                set self.vm = vm
+                return True
+        return False
+
     def list(self):
         return self.run_command("azure vm list --json")
 
