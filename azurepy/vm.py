@@ -2,6 +2,7 @@ from subprocess import Popen, PIPE
 import json
 import sys
 import random
+import ipdb
 
 
 class AzureVM():
@@ -97,6 +98,25 @@ class AzureVM():
                 self.vm = vm
                 return True
         return False
+
+    def get_nsg(self):
+        self.nsg = self.run_command("azure network nsg list -g {} --json".format(self.get_resource_group_name()))
+
+    def get_ip(self):
+        result = self.run_command("azure network public-ip list -g {} --json".format(self.get_resource_group_name()))
+        if len(result) == 1:
+            result = result[0]
+        else:
+            print "DEBUG: unexpected result (too many lines)"
+            return False
+        if "ipAddress" in result:
+            self.ip = result["ipAddress"]
+        else:
+            self.ip = False
+            ipdb.set_trace()
+            print "DEBUG: {}".format(result)
+        return self.ip
+
 
     def get_power_state(self):
         if "powerState" in self.vm:
