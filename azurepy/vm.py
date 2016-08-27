@@ -85,8 +85,13 @@ class AzureVM():
         vm_list = self.list()
         for vm in vm_list:
             if vm['name'] == vm_name:
-                set self.vm = vm
+                self.vm = vm
                 return True
+        return False
+
+    def is_running(self):
+        if self.vm['powerState'] == "VM running":
+            return True
         return False
 
     def list(self):
