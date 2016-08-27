@@ -76,10 +76,19 @@ class AzureVM():
         return self.run_command("azure account list --json")
 
     def stop_vm(self):
-        self.run_command("azure vm stop --json {}".format(self.vm['name']))
+        self.run_command("azure vm stop -g {} -n {} --json".format(self.get_resource_group_name(), self.vm['name']))
+
+    def deallocate_vm(self):
+        self.run_command("azure vm deallocate -g {} -n {} --json".format(self.get_resource_group_name(), self.vm['name']))
 
     def start_vm(self):
-        self.run_command("azure vm start --json {}".format(self.vm['name']))
+        self.run_command("azure vm start -g {} -n {} --json".format(self.get_resource_group_name(), self.vm['name']))
+
+    def get_resource_group_name(self):
+        if "resourceGroupName" in self.vm:
+            return self.vm["resourceGroupName"]
+        else:
+            return False
 
     def set_vm(self, vm_name):
         vm_list = self.list()
@@ -89,8 +98,13 @@ class AzureVM():
                 return True
         return False
 
+    def get_power_state(self):
+        if "powerState" in self.vm:
+            return self.vm["powerState"]
+        return False
+
     def is_running(self):
-        if self.vm['powerState'] == "VM running":
+        if self.get_power_state() == "VM running":
             return True
         return False
 
