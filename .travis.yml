@@ -7,7 +7,7 @@ before_script:
   - echo "deb http://archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe" | sudo tee /etc/apt/sources.list
   - sudo apt-get update
   - sudo pip install flake8
-  - pip install azure
+  - pip install azure ipdb
 
 script:
   - "cd tests; py.test -v"
