@@ -3,7 +3,7 @@ import time
 import sys
 sys.path.append("../")
 from azurepy import queues
-from azure.storage import QueueMessage, QueueEnumResults, QueueMessagesList
+from azure.storage.queue import QueueMessage, QueueEnumResults, QueueMessagesList
 
 initial_length = 0
 initial_queue_count = 1

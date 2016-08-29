@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-from azure.storage import QueueService
+from azure.storage.queue import QueueService
 
 
 class Queue:
